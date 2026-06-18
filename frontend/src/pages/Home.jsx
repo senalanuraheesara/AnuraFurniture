@@ -571,30 +571,6 @@ export default function Home() {
               </motion.div>
             </div>
 
-
-            <motion.div
-              className="hero-trust"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.76, duration: 0.65 }}
-            >
-              <div className="hero-trust-item">
-                <span className="hero-trust-number">★★★★★ 4.9</span>
-                <span className="hero-trust-label">Rating</span>
-              </div>
-              <div className="hero-trust-item">
-                <span className="hero-trust-number">5000+</span>
-                <span className="hero-trust-label">Happy Homes</span>
-              </div>
-              <div className="hero-trust-item">
-                <span className="hero-trust-number">500+</span>
-                <span className="hero-trust-label">Products</span>
-              </div>
-              <div className="hero-trust-item">
-                <span className="hero-trust-number">15 Years</span>
-                <span className="hero-trust-label">Experience</span>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
