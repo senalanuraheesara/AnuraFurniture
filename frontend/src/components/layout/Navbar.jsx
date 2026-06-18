@@ -21,17 +21,6 @@ const NAV_LINKS = [
   { path: '/contact', label: 'Contact', icon: Phone },
 ];
 
-// Routes whose top section is a dark hero band flush under the navbar.
-// Matches the exact path or any sub-path (e.g. '/shop' covers '/shop/living-room').
-// NOTE: '/' (Home) is excluded — its hero uses a light white/blue background.
-const DARK_HERO_ROUTES = [
-  '/shop', '/about', '/contact', '/custom-order',
-  '/ai-recommendations', '/ai-room-designer',
-  '/terms', '/privacy', '/privacy-policy',
-];
-
-const isDarkHeroRoute = (pathname) =>
-  DARK_HERO_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 
 // Light content pages — navbar stays solid so it never overlaps breadcrumbs/body text
 const isLightContentRoute = (pathname) =>
@@ -54,14 +43,17 @@ export default function Navbar() {
   const cartCount = cart?.items?.reduce((s, i) => s + i.quantity, 0) || 0;
 
   const [scrolled, setScrolled] = useState(false);
-  const solidNav = scrolled || isLightContentRoute(location.pathname);
-  // When transparent over a dark hero (or in dark mode), use light-on-dark styling
-  const onDark = darkMode || (!solidNav && isDarkHeroRoute(location.pathname));
-  const iconBtnClass = `p-2 rounded-xl transition-colors ${
-    onDark
-      ? 'text-white hover:bg-white/10'
-      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-  }`;
+  const [navHovered, setNavHovered] = useState(false);
+  const navSolid = scrolled || navHovered;
+  const iconBtnClass = `p-2 rounded-xl transition-all duration-300 ease-in-out text-white hover:bg-white/15`;
+
+  const navStyle = {
+    background: navSolid ? '#1E3A8A' : 'rgba(255,255,255,0.1)',
+    backdropFilter: navSolid ? 'none' : 'blur(10px)',
+    WebkitBackdropFilter: navSolid ? 'none' : 'blur(10px)',
+    borderBottom: '1px solid rgba(255,255,255,0.15)',
+    transition: 'background 0.3s ease, backdrop-filter 0.3s ease',
+  };
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [profileOpen, setProfileOpen] = useState(false);
@@ -69,7 +61,8 @@ export default function Navbar() {
   const searchRef = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    onScroll();
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -107,22 +100,19 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          solidNav
-            ? 'glass shadow-glass border-b border-gray-200/80 dark:border-white/10 bg-white/95 dark:bg-dark-bg/95 backdrop-blur-xl'
-            : onDark
-              ? 'bg-primary-950/30 backdrop-blur-md border-b border-white/10'
-              : 'bg-transparent'
-        }`}
+        onMouseEnter={() => setNavHovered(true)}
+        onMouseLeave={() => setNavHovered(false)}
+        style={navStyle}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${navSolid ? 'shadow-lg' : ''}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-[4.5rem] lg:h-20 gap-4">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 flex-shrink-0" aria-label="Anura Furniture – Dekatana home">
-              <BrandLogo forDarkBg={onDark} size="lg" className="h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] drop-shadow-sm" />
+              <BrandLogo forDarkBg={true} size="lg" className="h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]" />
               <div className="hidden sm:block">
-                <p className={`font-display font-bold text-sm leading-tight ${onDark ? 'text-white' : 'text-gray-900 dark:text-white'}`}>Anura Furniture</p>
-                <p className={`text-[10px] leading-tight tracking-widest uppercase ${onDark ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'}`}>Dekatana</p>
+                <p className="font-display font-bold text-sm leading-tight text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)]">Anura Furniture</p>
+                <p className="text-[10px] leading-tight tracking-widest uppercase text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]">Dekatana</p>
               </div>
             </Link>
 
@@ -132,14 +122,12 @@ export default function Navbar() {
                 const active = isActiveNav(path);
                 return (
                 <Link key={path} to={path}
-                  className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+                  className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-300 ease-in-out ${
                     active
-                      ? onDark
-                        ? 'bg-white/20 text-white shadow-sm ring-1 ring-white/25'
-                        : 'bg-primary-800 text-white shadow-sm'
+                      ? 'bg-white/20 text-white shadow-sm ring-1 ring-white/25'
                       : highlight
-                        ? (onDark ? 'text-cyan-300 hover:bg-white/10' : 'text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20')
-                        : (onDark ? 'text-white/90 hover:bg-white/10' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800')
+                        ? 'text-cyan-300 hover:bg-white/10'
+                        : 'text-white/90 hover:bg-white/15'
                   }`}
                 >
                   {label}
@@ -187,11 +175,11 @@ export default function Navbar() {
               {isAuthenticated ? (
                 <div className="relative" ref={profileRef}>
                   <button onClick={() => setProfileOpen(!profileOpen)}
-                    className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl transition-all duration-300 ease-in-out hover:bg-white/15">
                     <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-700 to-cyan-500 flex items-center justify-center text-white text-xs font-bold overflow-hidden">
                       {user?.avatar ? <img src={user.avatar} alt="" className="w-full h-full object-cover" /> : user?.name?.charAt(0)?.toUpperCase()}
                     </div>
-                    <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 text-white/80 ${profileOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
                     {profileOpen && (
@@ -221,11 +209,7 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <Link to="/login" className={`ml-1 px-4 py-2 text-sm font-medium rounded-xl transition-colors shadow-glow ${
-                  onDark && !scrolled
-                    ? 'bg-white text-primary-900 hover:bg-blue-50'
-                    : 'bg-primary-800 text-white hover:bg-primary-700'
-                }`}>
+                <Link to="/login" className="ml-1 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 ease-in-out shadow-glow bg-white/95 text-primary-900 hover:bg-white border border-white/30">
                   Sign In
                 </Link>
               )}
@@ -242,14 +226,18 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden border-t border-white/10 glass">
+              className="lg:hidden border-t border-white/15 transition-all duration-300 ease-in-out"
+              style={{ background: navSolid ? '#1E3A8A' : 'rgba(255,255,255,0.1)', backdropFilter: navSolid ? 'none' : 'blur(10px)', WebkitBackdropFilter: navSolid ? 'none' : 'blur(10px)' }}>
               <div className="px-4 py-3 space-y-1">
                 {NAV_LINKS.map(({ path, label, icon: Icon, highlight }) => (
                   <Link key={path} to={path}
                     onClick={() => dispatch(toggleMobileMenu())}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      isActiveNav(path) ? 'bg-primary-800 text-white' :
-                      highlight ? 'text-cyan-600 dark:text-cyan-400' : 'text-gray-700 dark:text-gray-300'
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ease-in-out ${
+                      isActiveNav(path)
+                        ? 'bg-white/20 text-white'
+                        : highlight
+                          ? 'text-cyan-300 hover:bg-white/10'
+                          : 'text-white/90 hover:bg-white/15'
                     }`}
                   >
                     <Icon className="w-4 h-4" />{label}
