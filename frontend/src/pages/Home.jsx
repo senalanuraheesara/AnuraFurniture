@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { fetchProducts, fetchCategories } from "../store/slices/productSlice";
 import { Helmet } from "react-helmet-async";
 import heroFurnitureImg from "../assets/hero/hero-furniture.jpg";
@@ -179,29 +179,6 @@ export default function Home() {
     }
     return CATEGORY_FALLBACK;
   }, [categories, products]);
-
-  const heroProduct = featuredProducts[0] || products?.[0];
-  const heroPrimaryImage = heroProduct ? getPrimaryImage(heroProduct) : null;
-  const heroProductImg = heroPrimaryImage?.url
-    || "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=90&w=1000&auto=format&fit=crop";
-  const heroProductPrice = heroProduct
-    ? formatRs(heroProduct.discount > 0
-      ? heroProduct.price - (heroProduct.price * heroProduct.discount) / 100
-      : heroProduct.price)
-    : null;
-
-  // Hero image tilt
-  const mx = useMotionValue(0), my = useMotionValue(0);
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [8, -8]), { stiffness: 150, damping: 20 });
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [-6, 6]), { stiffness: 150, damping: 20 });
-  const heroRef = useRef(null);
-  const handleHeroMove = e => {
-    if (!heroRef.current) return;
-    const r = heroRef.current.getBoundingClientRect();
-    mx.set((e.clientX - r.left) / r.width - 0.5);
-    my.set((e.clientY - r.top) / r.height - 0.5);
-  };
-  const heroReset = () => { mx.set(0); my.set(0); };
 
   return (
     <div style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif", background: "#fff", color: "#111", overflowX: "hidden" }}>
@@ -444,135 +421,33 @@ export default function Home() {
                 </button>
               </motion.div>
 
-              {/* Trust row */}
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                style={{ display: "flex", gap: 0, borderTop: "1px solid #F0F0F0", paddingTop: 28 }}>
-                {[["5,000+", "Happy homes"], ["500+", "Products"], ["15 yrs", "Experience"], ["4.9★", "Rating"]].map(([v, l], i) => (
-                  <div key={l} style={{ flex: 1, borderRight: i < 3 ? "1px solid #F0F0F0" : "none", paddingRight: 20, paddingLeft: i > 0 ? 20 : 0 }}>
-                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, fontWeight: 700, color: "#1e3a8a", lineHeight: 1 }}>{v}</p>
-                    <p style={{ fontSize: 12, color: "#AAA", marginTop: 4 }}>{l}</p>
-                  </div>
-                ))}
-              </motion.div>
+            <motion.div
+              className="hero-trust"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.76, duration: 0.65 }}
+            >
+              <div className="hero-trust-item">
+                <span className="hero-trust-number">★★★★★ 4.9</span>
+                <span className="hero-trust-label">Rating</span>
+              </div>
+              <div className="hero-trust-item">
+                <span className="hero-trust-number">5000+</span>
+                <span className="hero-trust-label">Happy Homes</span>
+              </div>
+              <div className="hero-trust-item">
+                <span className="hero-trust-number">500+</span>
+                <span className="hero-trust-label">Products</span>
+              </div>
+              <div className="hero-trust-item">
+                <span className="hero-trust-number">15 Years</span>
+                <span className="hero-trust-label">Experience</span>
+              </div>
+            </motion.div>
             </div>
 
-            {/* RIGHT: HERO IMAGE COMPOSITION */}
-            <div ref={heroRef} onMouseMove={handleHeroMove} onMouseLeave={heroReset}
-              style={{ position: "relative", height: "calc(100vh - 80px)", minHeight: 560, maxHeight: 720, perspective: 1800, overflow: "visible" }}>
-
-              {/* Blue glow behind composition */}
-              <div style={{ position: "absolute", inset: "8% 4% 12% 8%", background: "radial-gradient(ellipse, rgba(37,99,235,0.22) 0%, transparent 70%)", borderRadius: "50%", filter: "blur(40px)", pointerEvents: "none", zIndex: 0 }} />
-
-              <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d", height: "100%", position: "relative", zIndex: 1 }}>
-
-                {/* Main hero image */}
-                <motion.div
-                  initial={{ opacity: 0, x: 40, scale: 0.96 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                  style={{
-                    position: "absolute", top: "2%", left: "10%", right: "2%", bottom: "6%",
-                    borderRadius: 28, overflow: "hidden",
-                    boxShadow: "0 32px 80px rgba(37,99,235,0.22), 0 12px 40px rgba(15,23,42,0.12)",
-                    transform: "translateZ(0px)",
-                    border: "3px solid rgba(255,255,255,0.85)",
-                  }}
-                >
-                  <img src={heroProductImg} alt={heroProduct?.name || "Anura Furniture showroom"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, transparent 85%, rgba(15,23,42,0.08) 100%)" }} />
-                </motion.div>
-
-                {/* Rating card — top left, prominent */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.85, y: -12 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 0.55, duration: 0.6 }}
-                  className="fa hero-float"
-                  style={{
-                    position: "absolute", top: "0%", left: "0%",
-                    borderRadius: 22, padding: "18px 22px",
-                    display: "flex", alignItems: "center", gap: 14,
-                    transform: "translateZ(90px)", minWidth: 200,
-                  }}
-                >
-                  <div style={{ width: 52, height: 52, borderRadius: 16, background: "linear-gradient(135deg,#FEF3C7,#FDE68A)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26, flexShrink: 0 }}>⭐</div>
-                  <div>
-                    <p style={{ fontWeight: 800, fontSize: 26, color: "#1e3a8a", lineHeight: 1, fontFamily: "'Playfair Display', serif" }}>4.9/5</p>
-                    <p style={{ fontSize: 12, color: "#64748b", marginTop: 5, fontWeight: 500 }}>5,000+ happy reviews</p>
-                    <div style={{ marginTop: 6 }}><Stars n={5} size={12} /></div>
-                  </div>
-                </motion.div>
-
-                {/* Real product card — bottom left, large & clickable */}
-                {heroProduct && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.85, x: -16 }}
-                    animate={{ opacity: 1, scale: 1, x: 0 }}
-                    transition={{ delay: 0.7, duration: 0.6 }}
-                    className="fb hero-float"
-                    onClick={() => navigate(getProductPath(heroProduct))}
-                    style={{
-                      position: "absolute", bottom: "10%", left: "-2%",
-                      borderRadius: 22, padding: "14px 16px",
-                      display: "flex", gap: 12, alignItems: "center",
-                      transform: "translateZ(110px)", maxWidth: 240, cursor: "pointer",
-                    }}
-                  >
-                    <div style={{ width: 64, height: 64, borderRadius: 16, overflow: "hidden", flexShrink: 0, border: "2px solid #EFF6FF" }}>
-                      <img src={heroProductImg} alt={heroProduct.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    </div>
-                    <div>
-                      <span style={{ background: "linear-gradient(135deg,#2563eb,#06b6d4)", color: "#fff", fontSize: 9, fontWeight: 800, padding: "3px 10px", borderRadius: 20, letterSpacing: ".08em" }}>
-                        {heroProduct.isBestSeller ? "BESTSELLER" : heroProduct.isFeatured ? "FEATURED" : "SHOP NOW"}
-                      </span>
-                      <p style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", marginTop: 6, lineHeight: 1.25, fontFamily: "'Cormorant Garamond', serif" }}>{heroProduct.name}</p>
-                      <p style={{ fontSize: 15, fontWeight: 800, color: "#2563eb", marginTop: 4 }}>{heroProductPrice}</p>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Free delivery — top right, bold */}
-                <motion.div
-                  initial={{ opacity: 0, y: -12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.85, duration: 0.55 }}
-                  className="fa hero-float-accent"
-                  style={{
-                    position: "absolute", top: "4%", right: "0%",
-                    borderRadius: 20, padding: "14px 18px",
-                    display: "flex", alignItems: "center", gap: 12,
-                    transform: "translateZ(100px)",
-                  }}
-                >
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>🚚</div>
-                  <div>
-                    <p style={{ fontSize: 14, fontWeight: 700, color: "#fff", lineHeight: 1 }}>Free Delivery</p>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.8)", marginTop: 3 }}>Island-wide · Same week</p>
-                  </div>
-                </motion.div>
-
-                {/* New arrivals pill — bottom right */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.95 }}
-                  className="fb"
-                  style={{
-                    position: "absolute", bottom: "6%", right: "0%",
-                    background: "#fff", border: "2px solid #BBF7D0",
-                    borderRadius: 20, padding: "12px 18px",
-                    boxShadow: "0 12px 36px rgba(22,163,74,0.15)",
-                    transform: "translateZ(80px)",
-                  }}
-                >
-                  <p style={{ fontSize: 13, fontWeight: 700, color: "#15803D" }}>✦ New arrivals weekly</p>
-                </motion.div>
-
-              </motion.div>
-            </div>
 
           </div>
-        </div>
       </section>
 
       {/* ══ MARQUEE ═════════════════════════════════════════════ */}
