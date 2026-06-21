@@ -55,19 +55,53 @@ export default function AIRecommendations() {
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30">
         {/* Hero */}
-        <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-cyan-900 text-white py-16 px-4 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-primary-900 via-primary-800 to-cyan-900 text-white pt-32 pb-16 px-4 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-10 right-10 w-80 h-80 bg-cyan-400 rounded-full blur-3xl" />
             <div className="absolute bottom-10 left-10 w-80 h-80 bg-primary-400 rounded-full blur-3xl" />
           </div>
           <div className="max-w-3xl mx-auto text-center relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex justify-center mb-6"
+              initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.6, type: 'spring' }}
+              className="flex justify-center mb-8 relative"
             >
-              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center animate-float">
-                <Sparkles className="w-8 h-8 text-cyan-300" />
+              <div className="relative group">
+                {/* Glowing aura */}
+                <motion.div 
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-cyan-400/30 rounded-3xl blur-xl" 
+                />
+                
+                {/* Main icon container */}
+                <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-white/10 to-white/30 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-[0_0_40px_rgba(34,211,238,0.3)] animate-float">
+                  <Sparkles className="w-12 h-12 text-cyan-300 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
+                  
+                  {/* Rotating dashed border */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-[-4px] border border-dashed border-cyan-300/40 rounded-[28px]"
+                  />
+                </div>
+                
+                {/* Sparkle decorators */}
+                <motion.div
+                  animate={{ y: [0, -10, 0], opacity: [0, 1, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  className="absolute -top-4 -right-4"
+                >
+                  <Sparkles className="w-6 h-6 text-yellow-300" />
+                </motion.div>
+                <motion.div
+                  animate={{ y: [0, -10, 0], opacity: [0, 1, 0] }}
+                  transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
+                  className="absolute -bottom-2 -left-4"
+                >
+                  <Sparkles className="w-4 h-4 text-cyan-200" />
+                </motion.div>
               </div>
             </motion.div>
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
