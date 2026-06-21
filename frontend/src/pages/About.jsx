@@ -30,17 +30,28 @@ export default function About() {
 
       <div className="min-h-screen">
         {/* Hero */}
-        <div className="bg-gradient-to-br from-primary-950 via-primary-900 to-slate-900 text-white py-24 px-4 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-5"
-            style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }}
+        <div className="bg-gradient-to-br from-primary-950 via-primary-900 to-slate-900 text-white pt-32 pb-24 px-4 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10"
+            style={{ backgroundImage: 'radial-gradient(circle, white 1.5px, transparent 1.5px)', backgroundSize: '30px 30px' }}
           />
-          <div className="max-w-3xl mx-auto text-center relative z-10">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <span className="badge-cyan mb-4">Our Story</span>
-              <h1 className="font-display text-5xl md:text-6xl font-bold mb-6">
-                Furniture <span className="text-gradient">කලාවේ</span><br />මහ ගෙදර
+          {/* Glowing background elements */}
+          <div className="absolute -top-20 -right-20 w-[30rem] h-[30rem] bg-cyan-500/20 rounded-full blur-[120px]" />
+          <div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] bg-primary-500/20 rounded-full blur-[120px]" />
+          
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
+              <div className="flex justify-center mb-6">
+                <span className="px-5 py-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-md text-cyan-300 font-semibold tracking-wide shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+                  Our Story
+                </span>
+              </div>
+              
+              <h1 className="font-display text-5xl md:text-7xl font-bold mb-8 leading-tight tracking-tight">
+                Furniture <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-300 to-primary-300 filter drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]">කලාවේ</span><br />
+                <span className="text-white drop-shadow-md">මහ ගෙදර</span>
               </h1>
-              <p className="text-blue-200 text-xl leading-relaxed">
+              
+              <p className="text-blue-100/90 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto font-light">
                 For over {yearsInBusiness} years, we have been transforming Sri Lankan homes and offices with furniture that tells a story of quality, passion, and timeless beauty.
               </p>
             </motion.div>
