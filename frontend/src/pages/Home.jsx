@@ -228,6 +228,28 @@ export default function Home() {
           transform:translateX(clamp(-6%,-4vw,-2%));
           margin-right:clamp(8%,14vw,18%);
         }
+        /* ── Mobile category scroll ── */
+        .cat-scroll-row{
+          display:flex;
+          gap:12px;
+          overflow-x:auto;
+          scroll-snap-type:x mandatory;
+          -webkit-overflow-scrolling:touch;
+          padding-bottom:8px;
+          scrollbar-width:none;
+        }
+        .cat-scroll-row::-webkit-scrollbar{display:none;}
+        .cat-scroll-item{
+          scroll-snap-align:start;
+          flex-shrink:0;
+          width:72vw;
+          max-width:260px;
+          height:220px;
+          border-radius:20px;
+          overflow:hidden;
+          position:relative;
+          cursor:pointer;
+        }
         .hero-title-en{
           display:block;
           font-family:'Playfair Display',Georgia,'Times New Roman',serif;
@@ -334,59 +356,68 @@ export default function Home() {
         @media (max-width:768px){
           .hero-fullscreen{
             height:auto;
-            min-height:100vh;
+            min-height:100svh;
             overflow:visible;
           }
           .hero-overlay{
-            background:rgba(0, 0, 0, 0.4);
+            background:linear-gradient(160deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.35) 60%,rgba(0,0,0,0.2) 100%);
           }
           .hero-inner{
             height:auto;
-            min-height:100vh;
-            align-items:center;
-            padding:6.5rem 1.25rem 3rem;
+            min-height:100svh;
+            align-items:flex-end;
+            padding:5.5rem 1rem calc(5rem + env(safe-area-inset-bottom));
+            justify-content:flex-start;
           }
           .hero-content{
             transform:none;
             margin-right:0;
             width:100%;
-            background:rgba(255,255,255,0.85);
-            backdrop-filter:blur(12px);
-            -webkit-backdrop-filter:blur(12px);
-            padding:28px 24px;
+            background:rgba(255,255,255,0.12);
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+            padding:24px 20px;
             border-radius:24px;
-            border:1px solid rgba(255,255,255,0.4);
-            box-shadow:0 20px 50px rgba(0,0,0,0.1);
-          }
-          .dark .hero-content{
-            background:rgba(15,23,42,0.85);
-            border-color:rgba(255,255,255,0.08);
-            box-shadow:0 20px 50px rgba(0,0,0,0.3);
+            border:1px solid rgba(255,255,255,0.25);
+            box-shadow:0 20px 60px rgba(0,0,0,0.25);
           }
           .hero-title-en{
-            font-size:clamp(40px, 10vw, 54px) !important;
+            font-size:clamp(38px, 11vw, 54px) !important;
+            color:#fff !important;
+            background:none !important;
+            -webkit-text-fill-color:#fff !important;
           }
           .hero-title-si{
-            font-size:clamp(22px, 5.5vw, 26px) !important;
+            font-size:clamp(20px, 5.5vw, 26px) !important;
           }
+          .hero-si-dark{color:#e2e8f0;}
+          .hero-si-blue{color:#93c5fd;}
           .hero-desc{
             font-size:14px;
+            color:rgba(255,255,255,0.85);
+            text-shadow:none;
             line-height:1.6;
-            margin-bottom:24px;
+            margin-bottom:20px;
           }
           .hero-trust{
-            gap:12px 16px;
+            gap:8px 12px;
             flex-wrap:wrap;
-            padding:12px 16px;
+            padding:10px 14px;
             width:100%;
             justify-content:space-between;
+            background:rgba(255,255,255,0.12);
+            border-color:rgba(255,255,255,0.2);
           }
+          .hero-trust-number{color:#93c5fd;font-size:16px;}
+          .hero-trust-label{color:rgba(255,255,255,0.8);}
           .hero-trust-item{min-width:auto;}
           .hero-actions{
             flex-direction:column;
-            margin-bottom:24px;
+            margin-bottom:16px;
           }
-          .hero-btn-primary,.hero-btn-secondary{width:100%;justify-content:center;}
+          .hero-btn-primary,.hero-btn-secondary{width:100%;justify-content:center;padding:14px 24px;}
+          .hero-btn-secondary{background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3);}
+          .hero-btn-secondary:hover{background:rgba(255,255,255,0.25);}
         }
         @media (min-width:769px) and (max-width:1024px){
           .hero-content{width:min(100%,540px);}
@@ -503,21 +534,43 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="px-4 py-16 md:px-8 md:py-24 max-w-7xl mx-auto" style={{ background: "#fff" }}>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10 sm:mb-12">
+      <section className="py-12 md:py-20 md:px-8" style={{ background: "#fff" }}>
+        <div className="max-w-7xl mx-auto px-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-12">
           <div>
             <p style={{ fontSize: 11, color: "#AAA", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 10 }}>Browse</p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 600, color: "#111", lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 3.5vw, 52px)", fontWeight: 600, color: "#111", lineHeight: 1.1 }}>
               Shop by <em style={{ fontStyle: "italic", color: "#2563eb" }}>Room</em>
             </h2>
           </div>
           <button onClick={() => navigate("/shop")} style={{ background: "none", border: "1.5px solid #E0E0E0", borderRadius: 12, padding: "10px 22px", fontSize: 13, color: "#555", cursor: "pointer", fontWeight: 500, display: "flex", alignItems: "center", gap: 7 }}>
-            View all rooms
+            View all
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Mobile: horizontal scroll row */}
+        <div className="sm:hidden px-4">
+          <div className="cat-scroll-row">
+            {displayCategories.map((cat, i) => (
+              <div key={cat.slug || cat.name}
+                onClick={() => navigate(`/shop/${cat.slug}`)}
+                className="cat-scroll-item"
+              >
+                <img src={cat.img} alt={cat.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 60%)" }} />
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px" }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#fff", fontWeight: 600, fontSize: 20, lineHeight: 1.2, marginBottom: 3 }}>{cat.name}</p>
+                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.65)" }}>{cat.count}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tablet/Desktop: bento grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto px-4 md:px-8">
           {displayCategories.map((cat, i) => {
             const classNames = [
               "sm:col-span-2 sm:row-span-2 h-[320px] sm:h-[574px]",
@@ -545,19 +598,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-4 py-16 md:px-8 md:py-24" style={{ background: "#FAFAFA" }}>
+      <section className="px-4 py-12 md:px-8 md:py-24" style={{ background: "#FAFAFA" }}>
         <div style={{ maxWidth: 1320, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10 sm:mb-12">
+            className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-12">
             <div>
               <p style={{ fontSize: 11, color: "#AAA", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 10 }}>Handpicked</p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(30px, 3vw, 48px)", fontWeight: 600, color: "#111" }}>Featured <em style={{ color: "#2563eb" }}>Collection</em></h2>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(26px, 3vw, 48px)", fontWeight: 600, color: "#111" }}>Featured <em style={{ color: "#2563eb" }}>Collection</em></h2>
             </div>
             <button onClick={() => navigate("/shop?isFeatured=true")} style={{ background: "none", border: "1.5px solid #E0E0E0", borderRadius: 12, padding: "10px 22px", fontSize: 13, color: "#555", cursor: "pointer", fontWeight: 500, display: "flex", alignItems: "center", gap: 7 }}>
               View all <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </motion.div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 20 }}>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
             {loading && Array.from({ length: 4 }).map((_, i) => <FeaturedProductSkeleton key={i} />)}
             {!loading && featuredProducts.map((product, i) => (
               <FeaturedProductCard key={product._id} product={product} i={i} />
@@ -636,14 +689,14 @@ export default function Home() {
       </section>
 
       {/* ══ STATS ════════════════════════════════════════════════ */}
-      <section className="px-4 py-12 md:px-8 md:py-20" style={{ background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0891b2 100%)" }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4">
-          {[["5,000+", "Happy families across Sri Lanka", "🏠"], ["500+", "Premium products available", "🛋️"], [`${yearsInBusiness}+`, "Years of craftsmanship", "🏆"], ["99%", "Customer satisfaction rate", "⭐"]].map(([v, l, icon], i) => (
+      <section className="px-4 py-10 md:px-8 md:py-20" style={{ background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0891b2 100%)" }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-2 md:gap-y-8 md:gap-x-4">
+          {[["5,000+", "Happy families", "🏠"], ["500+", "Premium products", "🛋️"], [`${yearsInBusiness}+`, "Years crafting", "🏆"], ["99%", "Satisfaction rate", "⭐"]].map(([v, l, icon], i) => (
             <motion.div key={l} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className={`text-center px-4 py-2 ${i < 3 ? "lg:border-r lg:border-white/10" : ""}`}>
-              <div style={{ fontSize: 32, marginBottom: 12 }}>{icon}</div>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 52, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{v}</p>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 8, lineHeight: 1.5 }}>{l}</p>
+              className={`text-center px-2 md:px-4 py-2 ${i < 3 ? "lg:border-r lg:border-white/10" : ""}`}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>{icon}</div>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px,8vw,52px)", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{v}</p>
+              <p style={{ fontSize: "clamp(11px,2.5vw,13px)", color: "rgba(255,255,255,0.5)", marginTop: 6, lineHeight: 1.4 }}>{l}</p>
             </motion.div>
           ))}
         </div>
@@ -715,6 +768,8 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Bottom nav spacer for mobile */}
+      <div className="h-20 lg:hidden" />
     </div>
   );
 }

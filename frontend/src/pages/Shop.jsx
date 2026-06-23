@@ -153,21 +153,21 @@ export default function Shop() {
             </p>
 
             {/* AI Search */}
-            <form onSubmit={handleAISearch} className="mt-6 flex gap-3 max-w-2xl">
+            <form onSubmit={handleAISearch} className="mt-5 flex flex-col sm:flex-row gap-3 max-w-2xl">
               <div className="relative flex-1">
                 <Sparkles className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cyan-400" />
                 <input
                   type="text"
                   value={aiSearch}
                   onChange={(e) => setAISearch(e.target.value)}
-                  placeholder='Try AI search: "modern sofa under Rs. 150,000 for small living room"'
+                  placeholder='AI search: "modern sofa under Rs. 150,000"'
                   className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-blue-200/60 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-sm"
                 />
               </div>
               <button
                 type="submit"
                 disabled={aiSearching}
-                className="px-5 py-3 bg-cyan-500 hover:bg-cyan-400 text-white font-semibold rounded-xl transition-colors flex items-center gap-2 flex-shrink-0"
+                className="w-full sm:w-auto px-5 py-3 bg-cyan-500 hover:bg-cyan-400 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
               >
                 {aiSearching ? (
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -377,7 +377,7 @@ export default function Shop() {
 
               {/* Grid */}
               {loading && !aiSearching ? (
-                <div className={`grid grid-cols-1 sm:grid-cols-2 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6`}>
+                <div className={`grid grid-cols-2 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-3 sm:gap-6`}>
                   {Array(9).fill(null).map((_, i) => (
                     <div key={i} className="card h-80 skeleton" />
                   ))}
@@ -391,7 +391,7 @@ export default function Shop() {
               ) : (
                 <motion.div
                   layout
-                  className={`grid grid-cols-1 sm:grid-cols-2 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6`}
+                  className={`grid grid-cols-2 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-3 sm:gap-6`}
                 >
                   <AnimatePresence>
                     {displayProducts.map((product) => (
@@ -437,6 +437,9 @@ export default function Shop() {
           </div>
         </div>
       </div>
+
+      {/* Bottom nav spacer */}
+      <div className="h-20 lg:hidden" />
     </>
   );
 }

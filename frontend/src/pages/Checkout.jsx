@@ -67,9 +67,9 @@ export default function Checkout() {
   return (
     <>
       <Helmet><title>Checkout – Anura Furniture</title></Helmet>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 py-12 px-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 pt-24 lg:pt-28 py-8 px-4 pb-mobile-nav">
         <div className="max-w-5xl mx-auto">
-          <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-white mb-8">Checkout</h1>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8">Checkout</h1>
 
           <form onSubmit={handleSubmit}>
             <div className="grid lg:grid-cols-3 gap-8">

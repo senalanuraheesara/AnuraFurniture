@@ -58,7 +58,7 @@ export default function Profile() {
   return (
     <>
       <Helmet><title>My Profile – Anura Furniture</title></Helmet>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 py-12 px-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 pt-24 lg:pt-28 py-8 px-4 pb-mobile-nav">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="card p-6 mb-6">

@@ -40,10 +40,10 @@ export default function Cart() {
   return (
     <>
       <Helmet><title>Shopping Cart – Anura Furniture</title></Helmet>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 py-12 px-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 pt-24 lg:pt-28 py-8 px-4 pb-mobile-nav">
         <div className="max-w-5xl mx-auto">
-          <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-            <ShoppingCart className="w-8 h-8 text-primary-700" /> Shopping Cart ({items.length})
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3">
+            <ShoppingCart className="w-7 h-7 sm:w-8 sm:h-8 text-primary-700" /> Shopping Cart ({items.length})
           </h1>
 
           {items.length === 0 ? (

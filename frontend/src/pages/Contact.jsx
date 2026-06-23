@@ -38,18 +38,18 @@ export default function Contact() {
 
       <div className="min-h-screen bg-white dark:bg-dark-bg">
         {/* Hero — pt clears fixed navbar */}
-        <div className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white pt-24 lg:pt-28 pb-14 px-4 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white pt-24 lg:pt-28 pb-10 md:pb-14 px-4 relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-5 pointer-events-none"
             style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }}
           />
           <div className="max-w-3xl mx-auto text-center relative z-10">
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
-            <p className="text-blue-200 text-lg">We'd love to hear from you. Come visit our showroom or reach out online.</p>
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3">Get In Touch</h1>
+            <p className="text-blue-200 text-base md:text-lg">We'd love to hear from you. Come visit our showroom or reach out online.</p>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 py-16 pb-28">
+        <div className="max-w-7xl mx-auto px-4 py-10 md:py-16 pb-mobile-nav">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div className="space-y-8">
@@ -123,7 +123,7 @@ export default function Contact() {
             </div>
 
             {/* Contact Form */}
-            <div className="card p-8">
+            <div className="card p-5 sm:p-8">
               {sent ? (
                 <div className="text-center py-8">
                   <span className="text-5xl mb-4 block">✅</span>

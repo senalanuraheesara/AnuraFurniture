@@ -33,10 +33,10 @@ export default function Wishlist() {
   return (
     <>
       <Helmet><title>My Wishlist – Anura Furniture</title></Helmet>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 py-12 px-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30 pt-24 lg:pt-28 py-8 px-4">
         <div className="max-w-5xl mx-auto">
-          <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-            <Heart className="w-8 h-8 text-red-500" /> My Wishlist ({items.length})
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3">
+            <Heart className="w-7 h-7 sm:w-8 sm:h-8 text-red-500" /> My Wishlist ({items.length})
           </h1>
 
           {items.length === 0 ? (
@@ -47,7 +47,7 @@ export default function Wishlist() {
               <Link to="/shop" className="btn-primary inline-flex">Browse Collection <ArrowRight className="w-4 h-4" /></Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {items.map((product) => {
                 const finalPrice = product.discount > 0
                   ? product.price - (product.price * product.discount) / 100
@@ -95,6 +95,9 @@ export default function Wishlist() {
           )}
         </div>
       </div>
+
+      {/* Bottom nav spacer */}
+      <div className="h-20 lg:hidden" />
     </>
   );
 }

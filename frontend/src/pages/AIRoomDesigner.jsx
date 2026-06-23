@@ -52,7 +52,7 @@ export default function AIRoomDesigner() {
       </Helmet>
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900/30">
-        <div className="bg-gradient-to-br from-cyan-900 via-primary-900 to-primary-800 text-white pt-32 pb-16 px-4 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-cyan-900 via-primary-900 to-primary-800 text-white pt-24 md:pt-32 pb-12 md:pb-16 px-4 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-10 left-10 w-80 h-80 bg-primary-400 rounded-full blur-3xl" />
             <div className="absolute bottom-10 right-10 w-80 h-80 bg-cyan-400 rounded-full blur-3xl" />
@@ -243,5 +243,6 @@ export default function AIRoomDesigner() {
         </div>
       </div>
     </>
+
   );
 }

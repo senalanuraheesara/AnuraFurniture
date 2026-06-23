@@ -101,7 +101,7 @@ export default function AIChatbot() {
         animate={{ scale: 1 }}
         transition={{ delay: 2, type: 'spring' }}
         onClick={() => { setIsOpen(true); setIsMinimized(false); }}
-        className="fixed bottom-6 left-6 z-40 w-14 h-14 bg-gradient-to-br from-primary-800 to-cyan-600 text-white rounded-2xl shadow-glow hover:shadow-glow-cyan hover:scale-105 transition-all duration-300 flex items-center justify-center"
+        className="fixed bottom-[84px] lg:bottom-6 left-6 z-40 w-14 h-14 bg-gradient-to-br from-primary-800 to-cyan-600 text-white rounded-2xl shadow-glow hover:shadow-glow-cyan hover:scale-105 transition-all duration-300 flex items-center justify-center"
         aria-label="Open AI Chat"
       >
         <MessageCircle className="w-6 h-6" />
@@ -125,7 +125,7 @@ export default function AIChatbot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className={`fixed bottom-24 left-6 z-40 w-80 sm:w-96 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden flex flex-col ${isMinimized ? 'h-14' : 'h-[500px]'}`}
+            className={`fixed bottom-[160px] lg:bottom-24 left-6 z-40 w-80 sm:w-96 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden flex flex-col ${isMinimized ? 'h-14' : 'h-[500px]'}`}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary-800 to-cyan-700 text-white flex-shrink-0">
