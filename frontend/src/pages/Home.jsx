@@ -329,15 +329,63 @@ export default function Home() {
           color:#111827;
           line-height:1.3;
         }
+        .dark .hero-si-dark{color:#F1F5F9;}
+        .dark .hero-desc{color:#CBD5E1;text-shadow:none;}
         @media (max-width:768px){
-          .hero-overlay{
-            background:linear-gradient(180deg,rgba(255,255,255,0.55) 0%,rgba(255,255,255,0.25) 45%,rgba(255,255,255,0.08) 75%,rgba(255,255,255,0) 100%);
+          .hero-fullscreen{
+            height:auto;
+            min-height:100vh;
+            overflow:visible;
           }
-          .hero-inner{align-items:flex-end;padding:calc(5.5rem + 40px) 1.25rem 3rem;}
-          .hero-content{margin-right:0;transform:none;width:100%;}
-          .hero-trust{gap:16px 20px;flex-wrap:wrap;padding:10px 18px;}
+          .hero-overlay{
+            background:rgba(0, 0, 0, 0.4);
+          }
+          .hero-inner{
+            height:auto;
+            min-height:100vh;
+            align-items:center;
+            padding:6.5rem 1.25rem 3rem;
+          }
+          .hero-content{
+            transform:none;
+            margin-right:0;
+            width:100%;
+            background:rgba(255,255,255,0.85);
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            padding:28px 24px;
+            border-radius:24px;
+            border:1px solid rgba(255,255,255,0.4);
+            box-shadow:0 20px 50px rgba(0,0,0,0.1);
+          }
+          .dark .hero-content{
+            background:rgba(15,23,42,0.85);
+            border-color:rgba(255,255,255,0.08);
+            box-shadow:0 20px 50px rgba(0,0,0,0.3);
+          }
+          .hero-title-en{
+            font-size:clamp(40px, 10vw, 54px) !important;
+          }
+          .hero-title-si{
+            font-size:clamp(22px, 5.5vw, 26px) !important;
+          }
+          .hero-desc{
+            font-size:14px;
+            line-height:1.6;
+            margin-bottom:24px;
+          }
+          .hero-trust{
+            gap:12px 16px;
+            flex-wrap:wrap;
+            padding:12px 16px;
+            width:100%;
+            justify-content:space-between;
+          }
           .hero-trust-item{min-width:auto;}
-          .hero-actions{flex-direction:column;}
+          .hero-actions{
+            flex-direction:column;
+            margin-bottom:24px;
+          }
           .hero-btn-primary,.hero-btn-secondary{width:100%;justify-content:center;}
         }
         @media (min-width:769px) and (max-width:1024px){
@@ -407,16 +455,12 @@ export default function Home() {
             </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.38 }}
-                style={{ display: "flex", gap: 12, marginBottom: 52 }}>
-                <button onClick={() => navigate("/shop")} style={{ background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)", color: "#fff", border: "none", borderRadius: 14, padding: "15px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 9, letterSpacing: ".01em", transition: "transform .15s", boxShadow: "0 12px 30px rgba(37,99,235,0.32)" }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
+                className="flex flex-col sm:flex-row gap-3 mb-10 sm:mb-12">
+                <button onClick={() => navigate("/shop")} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-white font-semibold rounded-2xl shadow-lg transition-transform duration-150 hover:-translate-y-0.5" style={{ background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)", boxShadow: "0 12px 30px rgba(37,99,235,0.32)" }}>
                   Explore Collection
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <button onClick={() => navigate("/ai-room-designer")} style={{ background: "#fff", color: "#1e3a8a", border: "1.5px solid #BFDBFE", borderRadius: 14, padding: "15px 28px", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, transition: "border-color .15s, background .15s" }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = "#2563eb"; e.currentTarget.style.background = "#EFF6FF"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "#BFDBFE"; e.currentTarget.style.background = "#fff"; }}>
+                <button onClick={() => navigate("/ai-room-designer")} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-primary-900 border border-blue-200 font-semibold rounded-2xl transition-all duration-150 hover:border-blue-600 hover:bg-blue-50">
                   ✦ AI Room Designer
                 </button>
               </motion.div>
@@ -459,9 +503,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ CATEGORIES ══════════════════════════════════════════ */}
-      <section style={{ padding: "100px 48px", background: "#fff", maxWidth: 1320, margin: "0 auto" }}>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 52 }}>
+      <section className="px-4 py-16 md:px-8 md:py-24 max-w-7xl mx-auto" style={{ background: "#fff" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10 sm:mb-12">
           <div>
             <p style={{ fontSize: 11, color: "#AAA", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 10 }}>Browse</p>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 3.5vw, 52px)", fontWeight: 600, color: "#111", lineHeight: 1.1 }}>
@@ -474,20 +517,20 @@ export default function Home() {
           </button>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "280px 280px", gap: 14 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {displayCategories.map((cat, i) => {
-            const spans = [
-              { gridColumn: "1", gridRow: "1 / 3" },
-              { gridColumn: "2", gridRow: "1" },
-              { gridColumn: "3", gridRow: "1" },
-              { gridColumn: "2", gridRow: "2" },
-              { gridColumn: "3", gridRow: "2" },
+            const classNames = [
+              "sm:col-span-2 sm:row-span-2 h-[320px] sm:h-[574px]",
+              "lg:col-span-1 h-[200px] sm:h-[280px]",
+              "lg:col-span-1 h-[200px] sm:h-[280px]",
+              "lg:col-span-1 h-[200px] sm:h-[280px]",
+              "lg:col-span-1 h-[200px] sm:h-[280px]",
             ];
             return (
               <motion.div key={cat.slug || cat.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                 onClick={() => navigate(`/shop/${cat.slug}`)}
-                className="cat-card"
-                style={{ ...spans[i], position: "relative", borderRadius: 20, overflow: "hidden", cursor: "pointer" }}>
+                className={`cat-card ${classNames[i]} relative rounded-[20px] overflow-hidden cursor-pointer`}
+              >
                 <img src={cat.img} alt={cat.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .6s" }}
                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
                   onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"} />
@@ -502,11 +545,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ FEATURED PRODUCTS ═══════════════════════════════════ */}
-      <section style={{ padding: "80px 48px 100px", background: "#FAFAFA" }}>
+      <section className="px-4 py-16 md:px-8 md:py-24" style={{ background: "#FAFAFA" }}>
         <div style={{ maxWidth: 1320, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
+            className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10 sm:mb-12">
             <div>
               <p style={{ fontSize: 11, color: "#AAA", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 10 }}>Handpicked</p>
               <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(30px, 3vw, 48px)", fontWeight: 600, color: "#111" }}>Featured <em style={{ color: "#2563eb" }}>Collection</em></h2>
@@ -533,8 +575,8 @@ export default function Home() {
       </section>
 
       {/* ══ SPLIT: AI ROOM DESIGNER ═════════════════════════════ */}
-      <section style={{ background: "#fff", padding: "100px 48px", overflow: "hidden" }}>
-        <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 80, alignItems: "center" }}>
+      <section className="px-4 py-16 md:px-8 md:py-24 overflow-hidden" style={{ background: "#fff" }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image side */}
           <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} style={{ position: "relative" }}>
             <div style={{ borderRadius: 28, overflow: "hidden", boxShadow: "0 28px 80px rgba(0,0,0,0.10)" }}>
@@ -556,7 +598,7 @@ export default function Home() {
             ))}
             {/* AI badge */}
             <motion.div className="fb" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              style={{ position: "absolute", top: "6%", right: "-6%", background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)", borderRadius: 20, padding: "16px 20px", boxShadow: "0 16px 48px rgba(37,99,235,0.35)" }}>
+              style={{ position: "absolute", top: "6%", right: "-12px", background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)", borderRadius: 20, padding: "16px 20px", boxShadow: "0 16px 48px rgba(37,99,235,0.35)" }}>
               <p style={{ fontSize: 28, marginBottom: 6 }}>🤖</p>
               <p style={{ fontSize: 12, fontWeight: 600, color: "#fff" }}>AI Room Designer</p>
               <p style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>Powered by Gemini</p>
@@ -581,11 +623,11 @@ export default function Home() {
                 <span style={{ fontSize: 14, color: "#444" }}>{f}</span>
               </div>
             ))}
-            <div style={{ display: "flex", gap: 12, marginTop: 40 }}>
-              <button onClick={() => navigate("/ai-room-designer")} style={{ background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)", color: "#fff", border: "none", borderRadius: 14, padding: "14px 28px", fontSize: 14, fontWeight: 600, cursor: "pointer", letterSpacing: ".01em", boxShadow: "0 12px 30px rgba(37,99,235,0.3)" }}>
+            <div className="flex flex-col sm:flex-row gap-3 mt-8 sm:mt-10">
+              <button onClick={() => navigate("/ai-room-designer")} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-white font-semibold rounded-2xl shadow-lg transition-transform duration-150 hover:-translate-y-0.5" style={{ background: "linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)", boxShadow: "0 12px 30px rgba(37,99,235,0.3)" }}>
                 Launch Room Designer
               </button>
-              <button onClick={() => navigate("/shop")} style={{ background: "#fff", color: "#1e3a8a", border: "1.5px solid #BFDBFE", borderRadius: 14, padding: "14px 24px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+              <button onClick={() => navigate("/shop")} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-primary-900 border border-blue-200 font-semibold rounded-2xl transition-all duration-150 hover:border-blue-600 hover:bg-blue-50">
                 Browse Furniture
               </button>
             </div>
@@ -594,11 +636,11 @@ export default function Home() {
       </section>
 
       {/* ══ STATS ════════════════════════════════════════════════ */}
-      <section style={{ background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0891b2 100%)", padding: "72px 48px" }}>
-        <div style={{ maxWidth: 1320, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0 }}>
+      <section className="px-4 py-12 md:px-8 md:py-20" style={{ background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0891b2 100%)" }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4">
           {[["5,000+", "Happy families across Sri Lanka", "🏠"], ["500+", "Premium products available", "🛋️"], [`${yearsInBusiness}+`, "Years of craftsmanship", "🏆"], ["99%", "Customer satisfaction rate", "⭐"]].map(([v, l, icon], i) => (
             <motion.div key={l} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              style={{ textAlign: "center", padding: "20px 32px", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none" }}>
+              className={`text-center px-4 py-2 ${i < 3 ? "lg:border-r lg:border-white/10" : ""}`}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>{icon}</div>
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 52, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{v}</p>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 8, lineHeight: 1.5 }}>{l}</p>
@@ -608,7 +650,7 @@ export default function Home() {
       </section>
 
       {/* ══ TESTIMONIALS ════════════════════════════════════════ */}
-      <section style={{ background: "#FAFAFA", padding: "100px 48px" }}>
+      <section className="px-4 py-16 md:px-8 md:py-24" style={{ background: "#FAFAFA" }}>
         <div style={{ maxWidth: 1320, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginBottom: 60 }}>
             <p style={{ fontSize: 11, color: "#AAA", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 12 }}>Testimonials</p>
@@ -617,7 +659,7 @@ export default function Home() {
             </h2>
           </motion.div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map(({ name, city, initials, text, stars, bg }, i) => (
               <motion.div key={name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 style={{ background: "#fff", borderRadius: 24, padding: "32px", border: "1px solid #EBEBEB", cursor: "pointer", transition: "transform .3s, box-shadow .3s" }}
@@ -643,33 +685,30 @@ export default function Home() {
       </section>
 
       {/* ══ CTA ══════════════════════════════════════════════════ */}
-      <section style={{ padding: "80px 48px 100px", background: "#fff" }}>
+      <section className="px-4 py-16 md:px-8 md:py-24" style={{ background: "#fff" }}>
         <div style={{ maxWidth: 1320, margin: "0 auto" }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            style={{ position: "relative", borderRadius: 36, overflow: "hidden" }}>
-            <img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=90&w=1800&auto=format&fit=crop" alt="Beautiful interior" style={{ width: "100%", height: 480, objectFit: "cover", display: "block" }} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)" }} />
-            <div style={{ position: "absolute", top: "50%", left: "8%", transform: "translateY(-50%)", maxWidth: 520 }}>
-              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 16 }}>✦ Design Your Space</p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 4vw, 62px)", fontWeight: 600, color: "#fff", lineHeight: 1.1, marginBottom: 20 }}>
-                Transform your<br />
-                <em style={{ fontStyle: "italic" }}>home today</em>
-              </h2>
-              <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 15, lineHeight: 1.75, marginBottom: 36, maxWidth: 400 }}>
-                Premium furniture crafted for every style and budget. Free delivery across Sri Lanka.
-              </p>
-              <div style={{ display: "flex", gap: 12 }}>
-                <button onClick={() => navigate("/shop")} style={{ background: "#fff", color: "#111", border: "none", borderRadius: 14, padding: "15px 32px", fontSize: 14, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, transition: "transform .15s" }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
-                  Shop Now
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-                <button onClick={() => navigate("/custom-order")} style={{ background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,0.4)", borderRadius: 14, padding: "15px 28px", fontSize: 14, fontWeight: 500, cursor: "pointer", transition: "background .2s" }}
-                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
-                  onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                  Custom Order
-                </button>
+            className="relative rounded-[36px] overflow-hidden min-h-[400px] sm:min-h-[480px] flex items-center">
+            <img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=90&w=1800&auto=format&fit=crop" alt="Beautiful interior" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center p-6 sm:p-12 md:p-16">
+              <div className="relative z-10 max-w-[500px]">
+                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: ".14em", marginBottom: 16 }}>✦ Design Your Space</p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 4vw, 62px)", fontWeight: 600, color: "#fff", lineHeight: 1.1, marginBottom: 20 }}>
+                  Transform your<br />
+                  <em style={{ fontStyle: "italic" }}>home today</em>
+                </h2>
+                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 15, lineHeight: 1.75, marginBottom: 36, maxWidth: 400 }}>
+                  Premium furniture crafted for every style and budget. Free delivery across Sri Lanka.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button onClick={() => navigate("/shop")} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-gray-900 font-semibold rounded-2xl shadow-lg transition-transform duration-150 hover:-translate-y-0.5">
+                    Shop Now
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                  <button onClick={() => navigate("/custom-order")} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-transparent text-white border border-white/40 font-medium rounded-2xl transition-all duration-150 hover:bg-white/10">
+                    Custom Order
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>

@@ -207,7 +207,7 @@ export default function CustomOrder() {
             {/* Dimensions */}
             <div className="card p-6 space-y-4">
               <h3 className="font-bold text-gray-900 dark:text-white text-lg">Dimensions (Optional)</h3>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {['length', 'width', 'height'].map((dim) => (
                   <div key={dim}>
                     <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1 capitalize">{dim}</label>
@@ -256,7 +256,7 @@ export default function CustomOrder() {
             {/* Budget & Timeline */}
             <div className="card p-6 space-y-4">
               <h3 className="font-bold text-gray-900 dark:text-white text-lg">Budget & Timeline</h3>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Min Budget (Rs.)</label>
                   <input type="number" value={formData.budget.min} onChange={(e) => setFormData(p => ({ ...p, budget: { ...p.budget, min: e.target.value } }))} placeholder="50000" min="0" className="input-field" />

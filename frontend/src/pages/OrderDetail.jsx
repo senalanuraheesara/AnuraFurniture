@@ -37,23 +37,40 @@ export default function OrderDetail() {
           {order.status !== 'cancelled' && (
             <div className="card p-6">
               <h3 className="font-bold text-gray-900 dark:text-white mb-4">Order Progress</h3>
-              <div className="flex items-center gap-0">
-                {STATUS_STEPS.map((step, i) => (
-                  <div key={step} className="flex items-center flex-1">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${i <= currentStep ? 'bg-primary-800 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-400'}`}>
-                      {i < currentStep ? <Check className="w-4 h-4" /> : <span className="text-xs font-bold">{i + 1}</span>}
+              
+              {/* Desktop Stepper */}
+              <div className="hidden sm:block">
+                <div className="flex items-center gap-0">
+                  {STATUS_STEPS.map((step, i) => (
+                    <div key={step} className="flex items-center flex-1">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${i <= currentStep ? 'bg-primary-800 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-400'}`}>
+                        {i < currentStep ? <Check className="w-4 h-4" /> : <span className="text-xs font-bold">{i + 1}</span>}
+                      </div>
+                      {i < STATUS_STEPS.length - 1 && (
+                        <div className={`h-1 flex-1 mx-1 ${i < currentStep ? 'bg-primary-800' : 'bg-gray-200 dark:bg-gray-700'}`} />
+                      )}
                     </div>
-                    {i < STATUS_STEPS.length - 1 && (
-                      <div className={`h-1 flex-1 mx-1 ${i < currentStep ? 'bg-primary-800' : 'bg-gray-200 dark:bg-gray-700'}`} />
-                    )}
+                  ))}
+                </div>
+                <div className="flex justify-between mt-2">
+                  {STATUS_STEPS.map((step) => (
+                    <p key={step} className="text-xs text-gray-500 dark:text-gray-400 capitalize text-center flex-1">{step}</p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile Stepper */}
+              <div className="sm:hidden space-y-4">
+                {STATUS_STEPS.map((step, i) => (
+                  <div key={step} className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${i <= currentStep ? 'bg-primary-800 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-400'}`}>
+                      {i < currentStep ? <Check className="w-3.5 h-3.5" /> : <span className="text-[10px] font-bold">{i + 1}</span>}
+                    </div>
+                    <p className={`text-sm capitalize ${i <= currentStep ? 'font-semibold text-gray-900 dark:text-white' : 'text-gray-400'}`}>{step}</p>
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between mt-2">
-                {STATUS_STEPS.map((step) => (
-                  <p key={step} className="text-xs text-gray-500 dark:text-gray-400 capitalize text-center flex-1">{step}</p>
-                ))}
-              </div>
+
               {order.trackingNumber && (
                 <div className="mt-4 p-3 bg-cyan-50 dark:bg-cyan-900/20 rounded-xl">
                   <p className="text-cyan-700 dark:text-cyan-300 text-sm">Tracking: <strong>{order.trackingNumber}</strong></p>

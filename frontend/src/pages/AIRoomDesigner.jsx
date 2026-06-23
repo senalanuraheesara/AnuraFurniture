@@ -150,7 +150,7 @@ export default function AIRoomDesigner() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Interior Style</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {['modern', 'classic', 'minimalist', 'rustic', 'scandinavian', 'luxury'].map((s) => (
                       <button key={s}
                         onClick={() => setStyle(s)}
@@ -225,7 +225,7 @@ export default function AIRoomDesigner() {
                   {result.suggestedProducts?.length > 0 && (
                     <div>
                       <h3 className="font-bold text-gray-900 dark:text-white mb-4">🛋️ Recommended Products for This Room</h3>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {result.suggestedProducts.map((p) => (
                           <ProductCard key={p._id} product={p} />
                         ))}

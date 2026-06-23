@@ -198,20 +198,41 @@ export default function Shop() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex gap-8">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Backdrop for mobile filters */}
+            <AnimatePresence>
+              {filterOpen && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setFilterOpen(false)}
+                  className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-xs z-50"
+                />
+              )}
+            </AnimatePresence>
+
             {/* Sidebar Filters */}
-            <aside className={`${filterOpen ? 'block' : 'hidden'} lg:block w-64 flex-shrink-0`}>
-              <div className="card p-5 sticky top-24 space-y-6">
+            <aside className={`fixed inset-y-0 left-0 z-[60] w-72 bg-white dark:bg-gray-900 p-5 shadow-2xl transition-transform duration-300 transform ${filterOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:w-64 lg:p-5 lg:shadow-card lg:border lg:border-gray-100 lg:dark:border-gray-800 lg:rounded-2xl lg:bg-white lg:dark:bg-gray-900 lg:block flex-shrink-0 overflow-y-auto lg:overflow-y-visible`}>
+              <div className="space-y-6 lg:sticky lg:top-24">
                 <div className="flex items-center justify-between">
                   <h3 className="font-bold text-gray-900 dark:text-white">Filters</h3>
-                  {activeFiltersCount > 0 && (
+                  <div className="flex items-center gap-2">
+                    {activeFiltersCount > 0 && (
+                      <button
+                        onClick={() => setFilters({ keyword: '', minPrice: '', maxPrice: '', styles: [], roomTypes: [], materials: [], rating: '', isFeatured: '', isBestSeller: '', isNewArrival: '', isTrending: '' })}
+                        className="text-xs text-red-500 hover:text-red-700 flex items-center gap-1"
+                      >
+                        <X className="w-3 h-3" /> Clear ({activeFiltersCount})
+                      </button>
+                    )}
                     <button
-                      onClick={() => setFilters({ keyword: '', minPrice: '', maxPrice: '', styles: [], roomTypes: [], materials: [], rating: '', isFeatured: '', isBestSeller: '', isNewArrival: '', isTrending: '' })}
-                      className="text-xs text-red-500 hover:text-red-700 flex items-center gap-1"
+                      onClick={() => setFilterOpen(false)}
+                      className="lg:hidden p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
-                      <X className="w-3 h-3" /> Clear ({activeFiltersCount})
+                      <X className="w-5 h-5" />
                     </button>
-                  )}
+                  </div>
                 </div>
 
                 {/* Price Range */}

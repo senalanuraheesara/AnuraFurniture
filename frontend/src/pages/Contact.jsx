@@ -137,7 +137,7 @@ export default function Contact() {
                   <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm">Fill out the form and we'll get back to you shortly</p>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name *</label>
                         <input value={formData.name} onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))} required placeholder="Your name" className="input-field" />

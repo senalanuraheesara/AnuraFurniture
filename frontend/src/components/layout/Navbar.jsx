@@ -44,7 +44,7 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [navHovered, setNavHovered] = useState(false);
-  const navSolid = scrolled || navHovered;
+  const navSolid = scrolled || navHovered || isLightContentRoute(location.pathname);
   const iconBtnClass = `p-2 rounded-xl transition-all duration-300 ease-in-out text-white hover:bg-white/15`;
 
   const navStyle = {

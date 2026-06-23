@@ -134,7 +134,7 @@ export default function AIRecommendations() {
                 <p className="text-gray-500 dark:text-gray-400 mb-8">We'll find furniture that fits your financial comfort zone</p>
 
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Min Budget (Rs.)</label>
                       <input type="number" value={preferences.budget.min} onChange={(e) => setPreferences(p => ({ ...p, budget: { ...p.budget, min: Number(e.target.value) } }))} min="0" step="5000" className="input-field" />
@@ -182,7 +182,7 @@ export default function AIRecommendations() {
                 <div className="space-y-6">
                   <div>
                     <p className="font-semibold text-gray-900 dark:text-white mb-3">Room Type</p>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {ROOM_TYPES.map((room) => (
                         <button key={room}
                           onClick={() => toggleArray('roomType', room)}
@@ -197,7 +197,7 @@ export default function AIRecommendations() {
 
                   <div>
                     <p className="font-semibold text-gray-900 dark:text-white mb-3">Preferred Style</p>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {STYLES.map((style) => (
                         <button key={style}
                           onClick={() => toggleArray('style', style)}
