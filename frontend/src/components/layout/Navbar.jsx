@@ -21,6 +21,13 @@ const NAV_LINKS = [
   { path: '/contact', label: 'Contact', icon: Phone },
 ];
 
+// Bottom nav items (mobile only - most important 5)
+const BOTTOM_NAV = [
+  { path: '/', label: 'Home', icon: Home },
+  { path: '/shop', label: 'Shop', icon: Package },
+  { path: '/ai-recommendations', label: 'AI', icon: Sparkles },
+  { path: '/wishlist', label: 'Wishlist', icon: Heart, authRequired: true },
+];
 
 // Light content pages — navbar stays solid so it never overlaps breadcrumbs/body text
 const isLightContentRoute = (pathname) =>
@@ -151,13 +158,13 @@ export default function Navbar() {
 
               {isAuthenticated && (
                 <>
-                  {/* Wishlist */}
-                  <Link to="/wishlist" className={iconBtnClass}>
+                  {/* Wishlist - desktop only */}
+                  <Link to="/wishlist" className={`${iconBtnClass} hidden lg:flex`}>
                     <Heart className="w-5 h-5" />
                   </Link>
 
                   {/* Notifications */}
-                  <Link to="/notifications" className={`${iconBtnClass} relative`}>
+                  <Link to="/notifications" className={`${iconBtnClass} relative hidden sm:flex`}>
                     <Bell className="w-5 h-5" />
                     {unreadCount > 0 && <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{unreadCount > 9 ? '9+' : unreadCount}</span>}
                   </Link>
@@ -168,7 +175,7 @@ export default function Navbar() {
               <button onClick={() => dispatch(openCart())}
                 className={`${iconBtnClass} relative`}>
                 <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-primary-800 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{cartCount > 9 ? '9+' : cartCount}</span>}
+                {cartCount > 0 && <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{cartCount > 9 ? '9+' : cartCount}</span>}
               </button>
 
               {/* User */}
@@ -179,7 +186,7 @@ export default function Navbar() {
                     <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-700 to-cyan-500 flex items-center justify-center text-white text-xs font-bold overflow-hidden">
                       {user?.avatar ? <img src={user.avatar} alt="" className="w-full h-full object-cover" /> : user?.name?.charAt(0)?.toUpperCase()}
                     </div>
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 text-white/80 ${profileOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 text-white/80 hidden sm:block ${profileOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
                     {profileOpen && (
@@ -209,12 +216,12 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <Link to="/login" className="ml-1 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 ease-in-out shadow-glow bg-white/95 text-primary-900 hover:bg-white border border-white/30">
+                <Link to="/login" className="ml-1 px-3 sm:px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 ease-in-out shadow-glow bg-white/95 text-primary-900 hover:bg-white border border-white/30">
                   Sign In
                 </Link>
               )}
 
-              {/* Mobile Menu Toggle */}
+              {/* Mobile Menu Toggle - hamburger for full menu */}
               <button onClick={() => dispatch(toggleMobileMenu())} className={`lg:hidden ${iconBtnClass}`}>
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -222,32 +229,98 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Slide-down Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
               className="lg:hidden border-t border-white/15 transition-all duration-300 ease-in-out"
-              style={{ background: navSolid ? '#1E3A8A' : 'rgba(255,255,255,0.1)', backdropFilter: navSolid ? 'none' : 'blur(10px)', WebkitBackdropFilter: navSolid ? 'none' : 'blur(10px)' }}>
+              style={{ background: '#1E3A8A' }}>
               <div className="px-4 py-3 space-y-1">
                 {NAV_LINKS.map(({ path, label, icon: Icon, highlight }) => (
                   <Link key={path} to={path}
                     onClick={() => dispatch(toggleMobileMenu())}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ease-in-out ${
+                    className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 ease-in-out ${
                       isActiveNav(path)
-                        ? 'bg-white/20 text-white'
+                        ? 'bg-white/20 text-white ring-1 ring-white/20'
                         : highlight
                           ? 'text-cyan-300 hover:bg-white/10'
                           : 'text-white/90 hover:bg-white/15'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />{label}
+                    <Icon className="w-4 h-4 flex-shrink-0" />{label}
                   </Link>
                 ))}
+                {isAuthenticated && (
+                  <button onClick={() => { handleLogout(); dispatch(toggleMobileMenu()); }}
+                    className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-red-300 hover:bg-red-500/10 w-full transition-all">
+                    <LogOut className="w-4 h-4" /> Sign Out
+                  </button>
+                )}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </motion.nav>
+
+      {/* ── Mobile Bottom Navigation Bar ── */}
+      <nav className="mobile-bottom-nav" aria-label="Mobile navigation">
+        <div className="mobile-bottom-nav-inner">
+          {/* Home */}
+          <Link to="/" className={`mobile-nav-btn ${isActiveNav('/') ? 'active' : ''}`}>
+            <span className="nav-icon-wrap"><Home className="w-5 h-5" /></span>
+            <span className="mobile-nav-label">Home</span>
+          </Link>
+
+          {/* Shop */}
+          <Link to="/shop" className={`mobile-nav-btn ${isActiveNav('/shop') ? 'active' : ''}`}>
+            <span className="nav-icon-wrap"><Package className="w-5 h-5" /></span>
+            <span className="mobile-nav-label">Shop</span>
+          </Link>
+
+          {/* AI - center feature button */}
+          <Link to="/ai-recommendations"
+            className={`mobile-nav-btn relative ${isActiveNav('/ai-recommendations') || isActiveNav('/ai-room-designer') ? 'active' : ''}`}>
+            <span className={`flex items-center justify-center w-12 h-12 rounded-2xl shadow-lg transition-all duration-300 ${
+              isActiveNav('/ai-recommendations') || isActiveNav('/ai-room-designer')
+                ? 'bg-gradient-to-br from-primary-700 to-cyan-500 text-white scale-110'
+                : 'bg-gradient-to-br from-primary-600 to-cyan-500 text-white'
+            }`}>
+              <Sparkles className="w-5 h-5" />
+            </span>
+            <span className="mobile-nav-label text-primary-600 dark:text-primary-400">AI</span>
+          </Link>
+
+          {/* Cart */}
+          <button onClick={() => dispatch(openCart())} className={`mobile-nav-btn ${''}`}>
+            <span className="nav-icon-wrap relative">
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                  {cartCount > 9 ? '9+' : cartCount}
+                </span>
+              )}
+            </span>
+            <span className="mobile-nav-label">Cart</span>
+          </button>
+
+          {/* Profile */}
+          {isAuthenticated ? (
+            <Link to="/profile" className={`mobile-nav-btn ${isActiveNav('/profile') ? 'active' : ''}`}>
+              <span className="nav-icon-wrap">
+                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary-700 to-cyan-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden">
+                  {user?.avatar ? <img src={user.avatar} alt="" className="w-full h-full object-cover" /> : user?.name?.charAt(0)?.toUpperCase()}
+                </div>
+              </span>
+              <span className="mobile-nav-label">Me</span>
+            </Link>
+          ) : (
+            <Link to="/login" className="mobile-nav-btn">
+              <span className="nav-icon-wrap"><User className="w-5 h-5" /></span>
+              <span className="mobile-nav-label">Sign In</span>
+            </Link>
+          )}
+        </div>
+      </nav>
 
       {/* Search Overlay */}
       <AnimatePresence>
@@ -260,12 +333,12 @@ export default function Navbar() {
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input ref={searchRef} value={searchInput} onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Search furniture, styles, rooms… (AI-powered)"
-                  className="w-full pl-12 pr-16 py-4 bg-white dark:bg-gray-900 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 shadow-2xl text-base border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-primary-500"
+                  placeholder="Search furniture, styles, rooms…"
+                  className="w-full pl-12 pr-28 py-4 bg-white dark:bg-gray-900 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 shadow-2xl text-base border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-primary-500"
                 />
                 <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-primary-800 text-white rounded-xl text-sm font-medium">Search</button>
               </div>
-              <p className="text-white/50 text-sm mt-3 text-center">Try: "modern sofa under Rs.80,000" or "bedroom furniture set"</p>
+              <p className="text-white/50 text-sm mt-3 text-center">Try: "modern sofa under Rs.80,000"</p>
             </motion.form>
           </motion.div>
         )}

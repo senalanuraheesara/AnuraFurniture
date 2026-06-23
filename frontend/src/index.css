@@ -12,6 +12,7 @@
     --text: #111827;
     --border: #e5e7eb;
     --card: #f9fafb;
+    --bottom-nav-h: 68px;
   }
 
   .dark {
@@ -260,6 +261,67 @@
   .price-original {
     @apply text-gray-400 line-through text-sm;
   }
+
+  /* ── Mobile Bottom Navigation ── */
+  .mobile-bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 z-50 lg:hidden;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(229,231,235,0.8);
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.08);
+  }
+  .dark .mobile-bottom-nav {
+    background: rgba(15,23,42,0.92);
+    border-top-color: rgba(31,41,55,0.8);
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+  }
+  .mobile-bottom-nav-inner {
+    @apply flex items-center justify-around px-2 py-2;
+    height: var(--bottom-nav-h);
+  }
+  .mobile-nav-btn {
+    @apply flex flex-col items-center justify-center gap-0.5 flex-1 py-1.5 rounded-2xl transition-all duration-200 relative;
+    min-height: 52px;
+  }
+  .mobile-nav-btn.active {
+    @apply text-primary-700;
+  }
+  .dark .mobile-nav-btn.active {
+    @apply text-primary-300;
+  }
+  .mobile-nav-btn:not(.active) {
+    @apply text-gray-400 dark:text-gray-500;
+  }
+  .mobile-nav-btn .nav-icon-wrap {
+    @apply flex items-center justify-center w-10 h-7 rounded-xl transition-all duration-200;
+  }
+  .mobile-nav-btn.active .nav-icon-wrap {
+    @apply bg-primary-100 dark:bg-primary-900/40;
+  }
+  .mobile-nav-label {
+    @apply text-[10px] font-semibold leading-none tracking-tight;
+  }
+
+  /* ── Mobile-only content padding (accounts for bottom nav) ── */
+  .pb-mobile-nav {
+    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + 16px);
+  }
+  @media (min-width: 1024px) {
+    .pb-mobile-nav { padding-bottom: 0; }
+  }
+
+  /* ── Horizontal scroll snap row ── */
+  .scroll-snap-x {
+    @apply flex gap-4 overflow-x-auto no-scrollbar;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-snap-x > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
 }
 
 @layer utilities {
@@ -354,4 +416,10 @@
 
   .safe-top    { padding-top:    env(safe-area-inset-top); }
   .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+  /* Touch-friendly min sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
