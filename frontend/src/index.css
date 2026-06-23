@@ -264,16 +264,18 @@
 
   /* ── Mobile Bottom Navigation ── */
   .mobile-bottom-nav {
-    @apply fixed bottom-0 left-0 right-0 z-50 lg:hidden;
+    @apply fixed bottom-0 left-0 right-0 lg:hidden;
+    z-index: 999;
     padding-bottom: env(safe-area-inset-bottom);
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.96);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid rgba(229,231,235,0.8);
     box-shadow: 0 -8px 32px rgba(0,0,0,0.08);
+    pointer-events: all;
   }
   .dark .mobile-bottom-nav {
-    background: rgba(15,23,42,0.92);
+    background: rgba(15,23,42,0.96);
     border-top-color: rgba(31,41,55,0.8);
     box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
   }
@@ -284,6 +286,15 @@
   .mobile-nav-btn {
     @apply flex flex-col items-center justify-center gap-0.5 flex-1 py-1.5 rounded-2xl transition-all duration-200 relative;
     min-height: 52px;
+    cursor: pointer;
+    pointer-events: all;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    display: flex;
   }
   .mobile-nav-btn.active {
     @apply text-primary-700;
@@ -292,16 +303,22 @@
     @apply text-primary-300;
   }
   .mobile-nav-btn:not(.active) {
-    @apply text-gray-400 dark:text-gray-500;
+    color: #9ca3af;
   }
+  .dark .mobile-nav-btn:not(.active) {
+    color: #6b7280;
+  }
+  /* Icon wrappers — pointer-events:none so touches go to parent link/button */
   .mobile-nav-btn .nav-icon-wrap {
     @apply flex items-center justify-center w-10 h-7 rounded-xl transition-all duration-200;
+    pointer-events: none;
   }
   .mobile-nav-btn.active .nav-icon-wrap {
     @apply bg-primary-100 dark:bg-primary-900/40;
   }
   .mobile-nav-label {
     @apply text-[10px] font-semibold leading-none tracking-tight;
+    pointer-events: none;
   }
 
   /* ── Mobile-only content padding (accounts for bottom nav) ── */

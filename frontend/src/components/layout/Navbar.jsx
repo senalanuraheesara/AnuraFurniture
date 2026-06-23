@@ -263,62 +263,115 @@ export default function Navbar() {
       </motion.nav>
 
       {/* ── Mobile Bottom Navigation Bar ── */}
-      <nav className="mobile-bottom-nav" aria-label="Mobile navigation">
+      <nav className="mobile-bottom-nav" aria-label="Mobile navigation" style={{ touchAction: 'manipulation' }}>
         <div className="mobile-bottom-nav-inner">
+
           {/* Home */}
-          <Link to="/" className={`mobile-nav-btn ${isActiveNav('/') ? 'active' : ''}`}>
-            <span className="nav-icon-wrap"><Home className="w-5 h-5" /></span>
+          <Link
+            to="/"
+            className={`mobile-nav-btn ${isActiveNav('/') ? 'active' : ''}`}
+            style={{ touchAction: 'manipulation' }}
+          >
+            <div className="nav-icon-wrap">
+              <Home className="w-5 h-5" />
+            </div>
             <span className="mobile-nav-label">Home</span>
           </Link>
 
           {/* Shop */}
-          <Link to="/shop" className={`mobile-nav-btn ${isActiveNav('/shop') ? 'active' : ''}`}>
-            <span className="nav-icon-wrap"><Package className="w-5 h-5" /></span>
+          <Link
+            to="/shop"
+            className={`mobile-nav-btn ${isActiveNav('/shop') ? 'active' : ''}`}
+            style={{ touchAction: 'manipulation' }}
+          >
+            <div className="nav-icon-wrap">
+              <Package className="w-5 h-5" />
+            </div>
             <span className="mobile-nav-label">Shop</span>
           </Link>
 
-          {/* AI - center feature button */}
-          <Link to="/ai-recommendations"
-            className={`mobile-nav-btn relative ${isActiveNav('/ai-recommendations') || isActiveNav('/ai-room-designer') ? 'active' : ''}`}>
-            <span className={`flex items-center justify-center w-12 h-12 rounded-2xl shadow-lg transition-all duration-300 ${
-              isActiveNav('/ai-recommendations') || isActiveNav('/ai-room-designer')
-                ? 'bg-gradient-to-br from-primary-700 to-cyan-500 text-white scale-110'
-                : 'bg-gradient-to-br from-primary-600 to-cyan-500 text-white'
-            }`}>
-              <Sparkles className="w-5 h-5" />
-            </span>
-            <span className="mobile-nav-label text-primary-600 dark:text-primary-400">AI</span>
+          {/* AI - glowing center button */}
+          <Link
+            to="/ai-recommendations"
+            className="mobile-nav-btn"
+            style={{ touchAction: 'manipulation' }}
+          >
+            <div style={{
+              width: 48, height: 48, borderRadius: 16,
+              background: 'linear-gradient(135deg, #1e40af, #06b6d4)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#fff',
+              boxShadow: '0 4px 20px rgba(6,182,212,0.45)',
+              transform: isActiveNav('/ai-recommendations') || isActiveNav('/ai-room-designer') ? 'scale(1.1)' : 'scale(1)',
+              transition: 'transform 0.2s',
+              pointerEvents: 'none',
+            }}>
+              <Sparkles style={{ width: 20, height: 20 }} />
+            </div>
+            <span className="mobile-nav-label" style={{ color: '#2563eb' }}>AI</span>
           </Link>
 
           {/* Cart */}
-          <button onClick={() => dispatch(openCart())} className={`mobile-nav-btn ${''}`}>
-            <span className="nav-icon-wrap relative">
+          <button
+            onClick={() => dispatch(openCart())}
+            className="mobile-nav-btn"
+            style={{ touchAction: 'manipulation' }}
+            type="button"
+          >
+            <div className="nav-icon-wrap" style={{ position: 'relative' }}>
               <ShoppingCart className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span style={{
+                  position: 'absolute', top: -4, right: -4,
+                  width: 16, height: 16, borderRadius: '50%',
+                  background: '#ef4444', color: '#fff',
+                  fontSize: 9, fontWeight: 700,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  pointerEvents: 'none',
+                }}>
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               )}
-            </span>
+            </div>
             <span className="mobile-nav-label">Cart</span>
           </button>
 
-          {/* Profile */}
+          {/* Profile / Sign In */}
           {isAuthenticated ? (
-            <Link to="/profile" className={`mobile-nav-btn ${isActiveNav('/profile') ? 'active' : ''}`}>
-              <span className="nav-icon-wrap">
-                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary-700 to-cyan-500 flex items-center justify-center text-white text-[10px] font-bold overflow-hidden">
-                  {user?.avatar ? <img src={user.avatar} alt="" className="w-full h-full object-cover" /> : user?.name?.charAt(0)?.toUpperCase()}
+            <Link
+              to="/profile"
+              className={`mobile-nav-btn ${isActiveNav('/profile') ? 'active' : ''}`}
+              style={{ touchAction: 'manipulation' }}
+            >
+              <div className="nav-icon-wrap">
+                <div style={{
+                  width: 24, height: 24, borderRadius: 8,
+                  background: 'linear-gradient(135deg, #1e40af, #06b6d4)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#fff', fontSize: 10, fontWeight: 700, overflow: 'hidden',
+                  pointerEvents: 'none',
+                }}>
+                  {user?.avatar
+                    ? <img src={user.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    : user?.name?.charAt(0)?.toUpperCase()
+                  }
                 </div>
-              </span>
+              </div>
               <span className="mobile-nav-label">Me</span>
             </Link>
           ) : (
-            <Link to="/login" className="mobile-nav-btn">
-              <span className="nav-icon-wrap"><User className="w-5 h-5" /></span>
+            <Link
+              to="/login"
+              className="mobile-nav-btn"
+              style={{ touchAction: 'manipulation' }}
+            >
+              <div className="nav-icon-wrap">
+                <User className="w-5 h-5" />
+              </div>
               <span className="mobile-nav-label">Sign In</span>
             </Link>
           )}
+
         </div>
       </nav>
 
